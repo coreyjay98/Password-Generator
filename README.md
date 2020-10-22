@@ -11,3 +11,5 @@ This project initially proved to be a challenge for me as I had little experienc
 This site is a single purpose password generator that allows the user to choose which characters they wish to include, they have the choice of Upper Case letters, Numbers and special symbols. This gives some variety and will help to build a secure and random, password for any user.
 
 Use this link to view the page!
+
+https://coreyjay98.github.io/Password-Generator/
