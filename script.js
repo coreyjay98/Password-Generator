@@ -1,62 +1,124 @@
+// Assignment Code
 var generateBtn = document.querySelector("#generate");
-generateBtn.addEventListener("click", writePassword);
-var includeUppercaseElement = document.getElementById("includeUppercase");
-var includeNumbersElement = document.getElementById("includeNumbers");
-var includeSymbolsElement = document.getElementById("includeSymbols");
-var form = document.getElementById("passwordGeneratorForm");
-var passwordDisplay = document.getElementById("#password");
-var cardBody = document.getElementById("card-body");
-var characterSubmit = document.getElementById("characterChoice");
+const upperCase = $("#upperCase");
+const numbers = $("#numbers");
+const specialChar = $("#specialChar");
+const characterSubmit = $("#characterChoice");
+const refreshButton = document.querySelector(".refreshBtn");
 
-var UPPERCASE_CHAR_CODES = arrayFromLowToHigh(65, 90);
-var LOWERCASE_CHAR_CODES = arrayFromLowToHigh(97, 122);
-var NUMBER_CHAR_CODES = arrayFromLowToHigh(48, 57);
-var SYMBOL_CHAR_CODES = arrayFromLowToHigh(33, 47)
-  .concat(arrayFromLowToHigh(58, 64))
-  .concat(arrayFromLowToHigh(91, 96))
-  .concat(arrayFromLowToHigh(123, 126));
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  var includeUppercase = includeUppercaseElement.checked;
-  var includeNumbers = includeNumbersElement.checked;
-  var includeSymbols = includeSymbolsElement.checked;
-  var password = generatePassword(
-    includeUppercase,
-    includeNumbers,
-    includeSymbols
-  );
-  var passwordDisplay = document.querySelector("#password");
-  passwordDisplay.textContent = password;
-});
+var lowerCaseLetters = [
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+];
+var upperCaseLetters = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+  "T",
+  "U",
+  "V",
+  "W",
+  "X",
+  "Y",
+  "Z",
+];
+var specialCharacters = [
+  "!",
+  "#",
+  "$",
+  "%",
+  "&",
+  "(",
+  ")",
+  "*",
+  "+",
+  ",",
+  "-",
+  "/",
+  ":",
+  ";",
+  "<",
+  "=",
+  ">",
+  "?",
+  "@",
+  "'",
+  "^ ",
+  "|",
+  "}",
+  "~",
+];
+var numbersArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
-function generatePassword(includeUppercase, includeNumbers, includeSymbols) {
-  let charCodes = LOWERCASE_CHAR_CODES;
-  if (includeUppercase) charCodes = charCodes.concat(UPPERCASE_CHAR_CODES);
-  if (includeSymbols) charCodes = charCodes.concat(SYMBOL_CHAR_CODES);
-  if (includeNumbers) charCodes = charCodes.concat(NUMBER_CHAR_CODES);
+var finalPassword = [];
 
-  var passwordCharacters = [];
-  for (let i = 0; i < characterSubmit.value; i++) {
-    var characterCode = charCodes[Math.floor(Math.random() * charCodes.length)];
-    passwordCharacters.push(String.fromCharCode(characterCode));
+var passwordOutput = [];
+// Add event listener to generate button
+generateBtn.addEventListener("click", generatePassword);
+
+function generatePassword() {
+  finalPassword = lowerCaseLetters;
+  if (upperCase.prop("checked")) {
+    finalPassword = finalPassword.concat(upperCaseLetters);
   }
-  return passwordCharacters.join("");
+  if (numbers.prop("checked")) {
+    finalPassword = finalPassword.concat(numbersArray);
+  }
+  if (specialChar.prop("checked")) {
+    finalPassword = finalPassword.concat(specialCharacters);
+  }
+  for (let i = 0; i < characterSubmit.val(); i++) {
+    passwordOutput.push(
+      finalPassword[Math.floor(Math.random() * finalPassword.length)]
+    );
+  }
+  var passwordText = $("#password");
+  passwordText.text(passwordOutput.join(""));
+  generateBtn.classList.add("hide");
 }
 
-function arrayFromLowToHigh(low, high) {
-  var array = [];
-  for (let i = low; i <= high; i++) {
-    array.push(i);
-  }
-  return array;
-}
+refreshButton.addEventListener("click", pageRefresh);
 
-function writePassword() {
-  var password = generatePassword(
-    includeUppercase,
-    includeNumbers,
-    includeSymbols
-  );
-  var passwordDisplay = document.querySelector("#password");
-  passwordDisplay.textContent = password;
+function pageRefresh() {
+  location.reload();
 }
